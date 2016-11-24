@@ -1,0 +1,107 @@
+<%@page
+	import="com.virtusa.project.services.book.BookServices,org.hibernate.Session,org.hibernate.SessionFactory,org.hibernate.Transaction,org.hibernate.cfg.Configuration"%>
+<%@page
+	import="com.virtusa.project.books.Book,com.virtusa.project.services.database.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"
+	import="com.virtusa.project.services.admin.AdminServices"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Service</title>
+<link
+	href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600'
+	rel='stylesheet' type='text/css'>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+
+	<%
+		out.print(request.getParameter("memberId") + "<br />"+request.getParameter("userName")+ "<br />");
+	if (request.getParameter("userName") != null) {
+		String fmemberName = request.getParameter("userName");
+		String fpassword = request.getParameter("password");
+		String fphoneNo = request.getParameter("phoneNumber");
+		AdminServices adminServices = new AdminServices();
+		adminServices.updateMemberDetails(Integer.parseInt(request.getParameter("memberId")), fmemberName,
+				fpassword, fphoneNo);
+	}
+		
+	%>
+	<h1>
+		<font color="#FF00FF" size="100">Library Management System</font>
+	</h1>
+	<div class="form">
+
+		<ul class="tab-group">
+			<li class="tab active"><a href="#signup">Update Member</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div id="signup">
+
+				<form action="update_book.jsp" method="post">
+
+					<div class="field-wrap">
+						<!-- <label> Book Name<span class="req" name="bookName">*</span> -->
+						Book Name </label> <input type="text" name="bookName"/>
+					</div>
+
+					<div class="field-wrap">
+						<!-- <label> Author<span class="req" name="Author">*</span> -->
+						Author </label> <input type="text" name="authorName" />
+					</div>
+
+					<div class="field-wrap">
+						<!-- <label> Edition<span class="req" name="edition">*</span> -->
+						Edition </label> <input type="number" name="edition"  />
+					</div>
+
+
+					<!--<p class="forgot"><a href="#">Forgot Password?</a></p>-->
+
+					<button class="button button-block" />
+					Update
+					</button>
+
+				</form>
+
+			</div>
+		</div>
+		<!-- tab-content -->
+
+	</div>
+	<!-- /form -->
+	<script
+		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+	<script src="js/index.js"></script>
+	<%-- <%
+		if (!(bookName.equals(request.getParameter("bookName"))
+				&& authorName.equals(request.getParameter("authorName"))
+				&& edition == Integer.parseInt(request.getParameter("edition")))) {
+			if (request.getParameter("bookName") != null) {
+				String fbookName = request.getParameter("bookName");
+				String fauthorName = request.getParameter("authorName");
+				String fedition = request.getParameter("edition");
+				AdminServices adminServices = new AdminServices();
+				adminServices.updateBookDetails(Integer.parseInt(request.getParameter("bookId")), fbookName,
+						fauthorName, fedition);
+			}
+		} else {
+			out.print("No changes Made");
+		}
+	%> --%>
+
+</body>
+</html>
+
+<!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" -->

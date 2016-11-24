@@ -9,19 +9,15 @@
 </head>
 <body>
 <%-- <jsp:param value="" name="adminid"/> --%>
-<%
-	int adminId = Integer.parseInt(request.getParameter("adminid"));
-	String adminPassword = request.getParameter("adminpassword");
-	/* Configuration configuration = new Configuration();
-	configuration.configure("hibernate.cfg.xml"); 
-	Configuration cfg = DatabaseServices.config();
-	SessionFactory sessionFactory = cfg.buildSessionFactory();
-	Session session1 = sessionFactory.openSession();
-	Transaction transaction = session1.beginTransaction();*/
-	DatabaseServices dbs = new DatabaseServices();
-	if(dbs.authenticateAdmin(adminId, adminPassword)){
-		
-	}
+ <%
+	session = request.getSession();
+ 	session.getValue("id");
 %>
+<table>
+<th> <a href="issue_book.jsp">Issue Book</a><br/></th>
+<th> <a href="return_book.jsp">Return Book</a><br/></th>
+<th> <a href="view_book.jsp">view Book List</a><br/></th>
+<th> <a href="display_user.jsp">Search Book List</a><br/></th>
+</table>
 </body>
 </html>

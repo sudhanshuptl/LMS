@@ -20,7 +20,11 @@
 	Transaction transaction = session1.beginTransaction();*/
 	DatabaseServices dbs = new DatabaseServices();
 	if(dbs.authenticateMember(memberId,memberPassword)){
-		
+		session = request.getSession();
+		session.setAttribute("id", memberId);
+		//session.setAttribute("userType", "admin"); 
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("member_home_page.jsp");
+		requestDispatcher.include(request, response);
 	}
 %>
 </body>

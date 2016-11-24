@@ -83,11 +83,11 @@ public class ServiceMain {
 				adminPage();
 				break;
 			case 2 :
-				adminServices.updateUserDetails();
+				//adminServices.updateUserDetails();
 				adminPage();
 				break;
 			case 3 :
-				adminServices.removeUser();
+				//adminServices.removeUser();
 				adminPage();
 				break;
 			case 4 :
@@ -95,15 +95,15 @@ public class ServiceMain {
 				adminPage();
 				break;
 			case 5 :
-				adminServices.addBook();
+				//adminServices.addBook();
 				adminPage();
 				break;
 			case 6 :
-				adminServices.updateBookDetails();
+				//adminServices.updateBookDetails();
 				adminPage();
 				break;
 			case 7 :
-				adminServices.removeBook();
+				//adminServices.removeBook();
 				adminPage();
 				break;
 			case 8 :

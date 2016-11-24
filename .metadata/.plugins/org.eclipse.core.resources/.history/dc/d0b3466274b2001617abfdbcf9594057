@@ -1,0 +1,31 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"
+	import="com.virtusa.project.services.admin.AdminServices"%>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Table Style</title>
+	<link rel="stylesheet" href="css/tablecss.css"> 
+	<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+</head>
+
+<body>
+<div class="table-title">
+<h3>Data Table</h3>
+</div>
+<table class="table-fill">
+<thead>
+<tr>
+<th class="text-left">Month</th>
+<th class="text-left">Sales</th>
+</tr>
+</thead>
+<tbody class="table-hover">
+<%
+	AdminServices
+%>
+</tbody>
+</table>
+  
+
+  </body>

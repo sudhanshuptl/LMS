@@ -19,6 +19,16 @@
 </head>
 
 <body>
+<table>
+<th> <a href="add_user.jsp">Add User</a><br/></th>
+<th> <a href="update_member_by_id.jsp">Update User Details</a><br/></th>
+<th> <a href="remove_user.jsp">Remove User</a><br/></th>
+<th> <a href="display_user.jsp">Display User Details</a><br/></th>
+<th> <a href="add_book.jsp">Add Book</a><br/></th>
+<th> <a href="update_book_by_id.jsp">Update Book Details</a><br/></th>
+<th> <a href="remove_book.jsp">Remove Book</a><br/></th>
+<th> <a href="display_book.jsp">Display Book Details</a><br/></th>
+</table>
 
 	<h1>
 		<font color="#FF00FF" size="100">Library Management System</font>
@@ -76,6 +86,9 @@
 			String password = request.getParameter("userPassword");
 			AdminServices adminServices = new AdminServices();
 			adminServices.addUser(userName, password, userPhoneNumber);
+		%>
+		<h1><center><color="RED">User added Successfully</color></center> </h1>
+		<% 
 		}
 	%>
 

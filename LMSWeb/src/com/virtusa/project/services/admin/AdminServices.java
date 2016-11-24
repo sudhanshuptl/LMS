@@ -100,7 +100,7 @@ public class AdminServices {
 
 	}
 	@SuppressWarnings("deprecation")
-	public void updateUserDetails() {
+	public void updateUserDetails(int memberId,String userName,String password,String userPhoneNumber) {
 		
 		ServiceMain serviceMain = new ServiceMain();
 		Configuration cfg = DatabaseServices.config();
@@ -109,11 +109,11 @@ public class AdminServices {
 		
 		Transaction transaction = session.beginTransaction();
 		System.out.println("Update the Details of User");
-		int id = serviceMain.intEntry("ID");
+		int id = memberId;
 		Member member = (Member)session.get(Member.class, id);
-		member.setUserName(serviceMain.stringEntry("UserName"));
-		member.setUserPassword(serviceMain.stringEntry("Password"));
-		member.setPhoneNumber(serviceMain.longEntry("Phone No"));
+		member.setUserName(userName);
+		member.setUserPassword(password);
+		member.setPhoneNumber(Long.parseLong(userPhoneNumber));
 		session.saveOrUpdate(member);
 		transaction.commit();
 		ServiceMain.printAcknowledgeMessage("\nUser Updated Successfully\n");
@@ -145,7 +145,7 @@ public class AdminServices {
 		sessionFactory.close();
 	}
 	@SuppressWarnings("deprecation")
-	public void updateBookDetails() {
+	public void updateBookDetails(int bookId,String bookName,String authorNmae,String edition) {
 		
 		ServiceMain serviceMain = new ServiceMain();
 		Configuration cfg = DatabaseServices.config();
@@ -154,12 +154,12 @@ public class AdminServices {
 		Transaction transaction = session.beginTransaction();
 		
 		System.out.println("Update the Details of User");
-		int id = serviceMain.intEntry("ID");
+		int id = bookId;
 		Book book = (Book)session.get(Book.class, id);
-		book.setBookName(serviceMain.stringEntry("Book Name"));
-		book.setAuthor(serviceMain.stringEntry("Author Name"));
-		book.setEdition(serviceMain.intEntry("Edition"));
-		book.setRating(serviceMain.doubleEntry("Rating"));
+		book.setBookName(bookName);
+		book.setAuthor(authorNmae);
+		book.setEdition(Integer.parseInt(edition));
+		book.setRating(4);
 		
 		session.saveOrUpdate(book);
 		
@@ -215,12 +215,26 @@ public class AdminServices {
 //			System.out.println(it.next());
 //		}
 		for(Book bk :book){
-			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+bk.getBookId()+"</td><td class=\"text-left\">"+bk.getBookName()+"</td><td class=\"text-left\">"+bk.getEdition()+"</td><td class=\"text-left\">"+bk.getRating()+"</td><td class=\"text-left\">"+bk.getMember()+"</td></tr>");
+			String id =(bk.getMember() != null)? bk.getMember().getId()+"":"-";
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+bk.getBookId()+"</td><td class=\"text-left\">"+bk.getBookName()+"</td><td class=\"text-left\">"+bk.getEdition()+"</td><td class=\"text-left\">"+bk.getRating()+"</td><td class=\"text-left\">"+id+"</td></tr>");
 		}
 
 		transaction.commit();
 		session.close();
 		sessionFactory.close();
 		return rowdata;
+	}
+	public Member searchByID(int id){
+		
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Member member =(Member)session.get(Member.class, id);
+		//print 
+//		System.out.println(book);
+		
+		session.close();
+		sessionFactory.close();
+		return member;
 	}
 }

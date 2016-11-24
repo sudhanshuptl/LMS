@@ -84,17 +84,18 @@ public class BookServices {
 		sessionFactory.close();
 	}
 	@SuppressWarnings("deprecation")
-	public void searchByID(int id){
+	public Book searchByID(int id){
 	
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		Book book =(Book)session.get(Book.class, id);
 		//print 
-		System.out.println(book);
+//		System.out.println(book);
 		
 		session.close();
 		sessionFactory.close();
+		return book;
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void searchByName(String name){
@@ -178,7 +179,7 @@ public class BookServices {
 	 *  Book Issue 
 	 */
 	@SuppressWarnings("deprecation")
-	public void issueBook(int memberId, int bookId) {
+	public String issueBook(int memberId, int bookId) {
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -194,30 +195,30 @@ public class BookServices {
 						book.setMember(member);
 						session.saveOrUpdate(book);
 						transaction.commit();
-						System.out.println("Book Succefully Issued");
+						return "Book Succefully Issued";
 					}
 					else{
-						System.out.println("This book is Not available");
+						return "This book is Not available";
 					}
 				}
 				else{
-					System.out.println("Book Not found, Check Book Id Again");
+					return "Book Not found, Check Book Id Again";
 				}
 			}
 			else{
-				System.out.println("You Already Issued 3 books : Max Issue limit");
+				return "You Already Issued 3 books : Max Issue limit";
 			}
 		}
 		else{
-			System.out.println("Invalid User !!");
+			return "Invalid User !!";
 		}
 
 		
-		session.close();
-		sessionFactory.close();
+		//session.close();
+		//sessionFactory.close();
 	}
 	@SuppressWarnings("deprecation")
-	public void returnBook(int memberId,int bookId){
+	public String returnBook(int memberId,int bookId){
 		Configuration configuration = DatabaseServices.config();
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -230,16 +231,16 @@ public class BookServices {
 				book.setMember(null);
 				session.saveOrUpdate(book);
 				transaction.commit();
-				System.out.println("Book Successfully returend, Thank you");
+				return "Book Successfully returend, Thank you";
 			}
 			else{
-				System.out.println("Book is not found in your issued List");
+				return "Book is not found in your issued List";
 			}
 		}
 		else{
-			System.out.println("Invalid User !!");
+			return "Invalid User !!";
 		}
-		session.close();
-		sessionFactory.close();
+		//session.close();
+		//sessionFactory.close();
 	}
 }
