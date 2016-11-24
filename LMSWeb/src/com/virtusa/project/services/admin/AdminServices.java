@@ -47,8 +47,8 @@ public class AdminServices {
 
 	}
 	@SuppressWarnings({"unchecked", "deprecation", "rawtypes"})
-	public void displayUserDetails() {
-
+	public String displayUserDetails() {
+		String rowdata="";
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -56,16 +56,20 @@ public class AdminServices {
 
 		Criteria criteria = session.createCriteria(Member.class);
 		List<Member> member = criteria.list();
-		Iterator it = member.iterator();
-		while (it.hasNext()) {
-			
-			System.out.println(it.next());
+//		Iterator it = member.iterator();
+//		while (it.hasNext()) {
+//			
+//			System.out.println(it.next());
+//		}
+	
+		for(Member mem:member){
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+mem.getId()+"</td><td class=\"text-left\">"+mem.getUserName()+"</td><td class=\"text-left\">"+mem.getPhoneNumber()+"</td></tr>");
 		}
 
 		transaction.commit();
 		session.close();
 		sessionFactory.close();
-
+		return rowdata;
 	}
 	@SuppressWarnings("deprecation")
 	public void removeUser(int id) {
@@ -196,7 +200,8 @@ public class AdminServices {
 
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
-	public void displayBookDetails() {
+	public String displayBookDetails() {
+		String rowdata="";
 		Configuration cfg = DatabaseServices.config();
 		SessionFactory sessionFactory = cfg.buildSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -204,15 +209,18 @@ public class AdminServices {
 
 		Criteria criteria = session.createCriteria(Book.class);
 		List<Book> book = criteria.list();
-		Iterator it = book.iterator();
-		while (it.hasNext()) {
-			
-			System.out.println(it.next());
+//		Iterator it = book.iterator();
+//		while (it.hasNext()) {
+//			
+//			System.out.println(it.next());
+//		}
+		for(Book bk :book){
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+bk.getBookId()+"</td><td class=\"text-left\">"+bk.getBookName()+"</td><td class=\"text-left\">"+bk.getEdition()+"</td><td class=\"text-left\">"+bk.getRating()+"</td><td class=\"text-left\">"+bk.getMember()+"</td></tr>");
 		}
 
 		transaction.commit();
 		session.close();
 		sessionFactory.close();
-
+		return rowdata;
 	}
 }
