@@ -25,6 +25,13 @@
 		session.setAttribute("userType", "admin"); 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("admin_home_page.jsp");
 		requestDispatcher.include(request, response);
+	}else{
+		out.print("not");
+		%>
+		<script>
+			window.location.href = "index.html";
+		</script>
+		<%
 	}
 %>
 </body>

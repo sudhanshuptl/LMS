@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="css/tablecss.css"> 
 <title>Admin</title>
 </head>
 <body>
@@ -13,11 +14,15 @@
 	session = request.getSession();
  	session.getValue("id");
 %>
-<table>
+<table class="table-fill">
 <th> <a href="issue_book.jsp">Issue Book</a><br/></th>
 <th> <a href="return_book.jsp">Return Book</a><br/></th>
 <th> <a href="view_book.jsp">view Book List</a><br/></th>
-<th> <a href="display_user.jsp">Search Book List</a><br/></th>
+<th> <a href="view_book.jsp">Search Book List</a><br/></th>
+<th> <a href="view_sort_by_id.jsp">Sort by id</a><br/></th>
+<th> <a href="view_sort_by_name.jsp">Sort by name</a><br/></th>
+<th> <a href="view_sort_by_rating.jsp">Sort by rating</a><br/></th>
+<th> <a href="logout.jsp">Logout</a><br/></th>
 </table>
 </body>
 </html>

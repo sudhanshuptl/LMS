@@ -84,5 +84,31 @@ select * from members_books
 desc books
 desc members
 desc admins
-desc members_books*/
+desc members_books
+select * from members
+select * from admins
+select * from books
+select * from members_books
+
+select admin_seq.nextval from dual
+insert into admins values(admin_seq.nextval,987987987,'admin','admin')
+delete from admins where adminid>103
+
+select member_seq.nextval from dual
+insert into members values(member_seq.nextval,999999,'Jon','abcd')
+delete from members where memberid<10
+
+select book_seq.nextval from dual
+insert into members values(member_seq.nextval,999999,'Jon','abcd')
+delete from members where memberid<10
+
+desc books
+
+insert into books values(book_seq.nextval,'AuthorA','Book12',2,4.5,null)
+insert into books values(book_seq.nextval,'AuthorB','Book13',4,3,null)
+insert into books values(book_seq.nextval,'AuthorC','Book14',5,4.7,null)
+insert into books values(book_seq.nextval,'AuthorD','Book15',7,3.2,null)
+delete from books where bookid<10
+
+*/
 

@@ -24,6 +24,7 @@
 
 <body>
 <table>
+<th> <a href="admin_home_page.jsp">Home</a><br/></th>
 <th> <a href="add_user.jsp">Add User</a><br/></th>
 <th> <a href="update_member_by_id.jsp">Update User Details</a><br/></th>
 <th> <a href="remove_user.jsp">Remove User</a><br/></th>
@@ -32,8 +33,8 @@
 <th> <a href="update_book_by_id.jsp">Update Book Details</a><br/></th>
 <th> <a href="remove_book.jsp">Remove Book</a><br/></th>
 <th> <a href="display_book.jsp">Display Book Details</a><br/></th>
+<th> <a href="logout.jsp">Logout</a><br/></th>
 </table>
-
 	<%
 		out.print(request.getParameter("memberId") + "<br />"+request.getParameter("userName")+ "<br />");
 	if (request.getParameter("userName") != null) {

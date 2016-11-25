@@ -21,6 +21,7 @@
 <th> <a href="update_book_by_id.jsp">Update Book Details</a><br/></th>
 <th> <a href="remove_book.jsp">Remove Book</a><br/></th>
 <th> <a href="display_book.jsp">Display Book Details</a><br/></th>
+<th> <a href="logout.jsp">Logout</a><br/></th>
 </table>
 
 </body>
