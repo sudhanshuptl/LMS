@@ -17,204 +17,195 @@ import com.virtusa.project.users.Member;
 public class AdminServices {
 
 	
-
-	public void addUser() {
+	
+	public boolean addUser(String userName,String password,String userPhoneNumber) {
 		
-		ServiceMain serviceMain = new ServiceMain();
+		//ServiceMain serviceMain = new ServiceMain();
 		Member member = new Member();
 		//member.setId(serviceMain.intEntry("Id"));
-		member.setUserName(serviceMain.stringEntry("UserName"));
-		member.setUserPassword(serviceMain.stringEntry("Password"));
-		member.setPhoneNumber(serviceMain.longEntry("Phone No"));
+		member.setUserName(userName);
+		member.setUserPassword(password);
+		member.setPhoneNumber(Long.parseLong(userPhoneNumber));
 
-		Configuration cfg = DatabaseServices.config();
-		@SuppressWarnings("deprecation")
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		
+		Session session = DatabaseServices.openSession();		
 		Transaction transaction = session.beginTransaction();
 		session.save(member);
 		transaction.commit();
 		
+		
 		DatabaseServices databaseServices = new DatabaseServices();
 		if(databaseServices.validateMemberId(member.getId())){
-			ServiceMain.printAcknowledgeMessage("\nUser "+member.getUserName()+" added successfully\n");			
+			DatabaseServices.closeSession(session);
+			return true;			
 		}else{
-			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
+			return false;
 		}
-		session.close();
-		sessionFactory.close();
 
 	}
 	@SuppressWarnings({"unchecked", "deprecation", "rawtypes"})
-	public void displayUserDetails() {
-
-		Configuration cfg = DatabaseServices.config();
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+	public String displayUserDetails() {
+		String rowdata="";
+		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
 
 		Criteria criteria = session.createCriteria(Member.class);
 		List<Member> member = criteria.list();
-		Iterator it = member.iterator();
-		while (it.hasNext()) {
-			
-			System.out.println(it.next());
+//		Iterator it = member.iterator();
+//		while (it.hasNext()) {
+//			
+//			System.out.println(it.next());
+//		}
+	
+		for(Member mem:member){
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+mem.getId()+"</td><td class=\"text-left\">"+mem.getUserName()+"</td><td class=\"text-left\">"+mem.getPhoneNumber()+"</td></tr>");
 		}
 
 		transaction.commit();
-		session.close();
-		sessionFactory.close();
-
+		DatabaseServices.closeSession(session);
+		return rowdata;
 	}
 	@SuppressWarnings("deprecation")
-	public void removeUser() {
+	public void removeUser(int id) {
 		
-		ServiceMain serviceMain = new ServiceMain();
-		Configuration cfg = DatabaseServices.config();
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
 		DatabaseServices databaseServices = new DatabaseServices();
 		
-		int memberId = serviceMain.intEntry("ID");
+		int memberId = id;
 		Member member = (Member) session.get(Member.class, memberId);
 		if(databaseServices.validateMemberId(memberId)){
 			session.delete(member);		
 		}else{
-			ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
-			removeUser();
+			System.out.println("Wow");
+			//ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
 		}
 		
 		transaction.commit();
-		member = (Member) session.get(Member.class, memberId);
-		if(member == null)
-			ServiceMain.printAcknowledgeMessage("\nUser Deleted Successfully\n");
-		else
-			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
-		session.close();
-		sessionFactory.close();
+//		member = (Member) session.get(Member.class, memberId);
+//		if(member == null)
+//			ServiceMain.printAcknowledgeMessage("\nUser Deleted Successfully\n");
+//		else
+//			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
+		DatabaseServices.closeSession(session);
 
 	}
 	@SuppressWarnings("deprecation")
-	public void updateUserDetails() {
+	public void updateUserDetails(int memberId,String userName,String password,String userPhoneNumber) {
 		
-		ServiceMain serviceMain = new ServiceMain();
-		Configuration cfg = DatabaseServices.config();
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		
 		Transaction transaction = session.beginTransaction();
 		System.out.println("Update the Details of User");
-		int id = serviceMain.intEntry("ID");
+		int id = memberId;
 		Member member = (Member)session.get(Member.class, id);
-		member.setUserName(serviceMain.stringEntry("UserName"));
-		member.setUserPassword(serviceMain.stringEntry("Password"));
-		member.setPhoneNumber(serviceMain.longEntry("Phone No"));
+		member.setUserName(userName);
+		member.setUserPassword(password);
+		member.setPhoneNumber(Long.parseLong(userPhoneNumber));
 		session.saveOrUpdate(member);
 		transaction.commit();
-		ServiceMain.printAcknowledgeMessage("\nUser Updated Successfully\n");
-		session.close();
-		sessionFactory.close();
+		//ServiceMain.printAcknowledgeMessage("\nUser Updated Successfully\n");
+		DatabaseServices.closeSession(session);
 		
 
 	}
 	@SuppressWarnings("deprecation")
-	public void addBook() {
+	public void addBook(String bookName,String authorNmae,String edition) {
 		
-		ServiceMain serviceMain = new ServiceMain();
-		Configuration cfg = DatabaseServices.config();
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
 
 		Book book = new Book();
 		//book.setBookId(serviceMain.intEntry("Book Id"));
-		book.setBookName(serviceMain.stringEntry("Book Name"));
-		book.setAuthor(serviceMain.stringEntry("Author Name"));
-		book.setEdition(serviceMain.intEntry("Edition"));
-		book.setRating(serviceMain.doubleEntry("Rating"));
+		book.setBookName(bookName);
+		book.setAuthor(authorNmae);
+		book.setEdition(Integer.parseInt(edition));
+		book.setRating(4);
 
 		session.save(book);
 		transaction.commit();
-		ServiceMain.printAcknowledgeMessage("\nBook added successfully\n");
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
 	}
 	@SuppressWarnings("deprecation")
-	public void updateBookDetails() {
+	public void updateBookDetails(int bookId,String bookName,String authorNmae,String edition) {
 		
-		ServiceMain serviceMain = new ServiceMain();
-		Configuration cfg = DatabaseServices.config();
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
 		
 		System.out.println("Update the Details of User");
-		int id = serviceMain.intEntry("ID");
+		int id = bookId;
 		Book book = (Book)session.get(Book.class, id);
-		book.setBookName(serviceMain.stringEntry("Book Name"));
-		book.setAuthor(serviceMain.stringEntry("Author Name"));
-		book.setEdition(serviceMain.intEntry("Edition"));
-		book.setRating(serviceMain.doubleEntry("Rating"));
+		book.setBookName(bookName);
+		book.setAuthor(authorNmae);
+		book.setEdition(Integer.parseInt(edition));
+		book.setRating(4);
 		
 		session.saveOrUpdate(book);
 		
 		transaction.commit();
-		ServiceMain.printAcknowledgeMessage("\nBook Updated Successfully\n");
-		session.close();
-		sessionFactory.close();
+		//ServiceMain.printAcknowledgeMessage("\nBook Updated Successfully\n");
+		DatabaseServices.closeSession(session);
 
 	}
 	@SuppressWarnings("deprecation")
-	public void removeBook() {
+	public void removeBook(int id) {
 		
-		ServiceMain serviceMain = new ServiceMain();
-		Configuration cfg = DatabaseServices.config();
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
 		
 		DatabaseServices databaseServices = new DatabaseServices();
 		
-		int bookId = serviceMain.intEntry("ID");
+		int bookId = id;
 		Book book = (Book) session.get(Book.class, bookId);
 		if(databaseServices.validateBookId(bookId)){
 			session.delete(book);		
 		}else{
-			ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
-			removeBook();
+			System.out.println("wow");
+			//ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
 		}
 		
 		transaction.commit();
-		book = (Book) session.get(Book.class, bookId);
-		if(book == null)
-			ServiceMain.printAcknowledgeMessage("\nBook Deleted Successfully\n");
-		else
-			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
+//		book = (Book) session.get(Book.class, bookId);
+//		if(book == null)
+//			ServiceMain.printAcknowledgeMessage("\nBook Deleted Successfully\n");
+//		else
+//			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
 				
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
 
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
-	public void displayBookDetails() {
-		Configuration cfg = DatabaseServices.config();
-		SessionFactory sessionFactory = cfg.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+	public String displayBookDetails() {
+		String rowdata="";
+		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
 
 		Criteria criteria = session.createCriteria(Book.class);
 		List<Book> book = criteria.list();
-		Iterator it = book.iterator();
-		while (it.hasNext()) {
-			
-			System.out.println(it.next());
+//		Iterator it = book.iterator();
+//		while (it.hasNext()) {
+//			
+//			System.out.println(it.next());
+//		}
+		for(Book bk :book){
+			String id =(bk.getMember() != null)? bk.getMember().getId()+"":"-";
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+bk.getBookId()+"</td><td class=\"text-left\">"+bk.getBookName()+"</td><td class=\"text-left\">"+bk.getEdition()+"</td><td class=\"text-left\">"+bk.getRating()+"</td><td class=\"text-left\">"+id+"</td></tr>");
 		}
 
 		transaction.commit();
+		DatabaseServices.closeSession(session);
+		return rowdata;
+	}
+	public Member searchByID(int id){
+		
+		Configuration configuration = DatabaseServices.config();
+		SessionFactory sessionFactory = configuration.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Member member =(Member)session.get(Member.class, id);
+		//print 
+//		System.out.println(book);
+		
 		session.close();
 		sessionFactory.close();
-
+		return member;
 	}
 }

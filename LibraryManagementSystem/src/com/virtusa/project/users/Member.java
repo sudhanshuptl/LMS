@@ -86,12 +86,5 @@ public class Member extends User{
 		}
 		return flag;
 	}
-	@Override
-	public String toString() {
-		return "Member [getId()=" + getId() + ", getUserName()=" + getUserName()
-				+ ", getPhoneNumber()=" + getPhoneNumber() + ", getBook()="
-				+ getBook() + "]";
-	}
-	
 	
 }
