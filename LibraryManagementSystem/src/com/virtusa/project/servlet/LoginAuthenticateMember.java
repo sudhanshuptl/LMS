@@ -25,10 +25,12 @@ public class LoginAuthenticateMember extends HttpServlet {
 			httpSession.setAttribute("memberId", memberId);
 			httpSession.setAttribute("userType", "MEMBER");
 			httpSession.setAttribute("memberName", memberName);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("member/member_home_page.jsp");
-			requestDispatcher.include(request, response);
+			//RequestDispatcher requestDispatcher = request.getRequestDispatcher("member/member_home_page.jsp");
+			//requestDispatcher.include(request, response);
+			response.sendRedirect("member/member_home_page.jsp");
+			return ;
 		}else{
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.html");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
 			requestDispatcher.forward(request, response);
 		}
 	}

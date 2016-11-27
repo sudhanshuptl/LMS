@@ -6,21 +6,39 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin</title>
+<style>
+	h2{
+	text-align: center;
+	padding-top: 200px;
+	}
+</style>
 </head>
 <body>
+<jsp:include page="/isValidMember" />
 <%-- <jsp:param value="" name="adminid"/> --%>
- <%
+<%--  <%
 	session = request.getSession(false);
 	out.print(session.getValue("memberId"));
 	out.print(session.getValue("userType"));
 	out.print(session.getValue("memberName"));
 	out.print(session.getValue("memberId"));
+	out.println(request.getAttribute("ack"));
+%> --%>
+<jsp:include page="member_header.html"></jsp:include>
+
+<%
+	String acknowledgeMessage = null;
+	session = request.getSession(false);
+	/* out.print(session.getValue("adminId"));
+	out.print(session.getValue("userType"));
+	out.print(session.getValue("adminName"));
+	out.print(session.getValue("adminId")); */
+	acknowledgeMessage = (String)(session.getAttribute("ack")+"");
+	if(acknowledgeMessage == null){
+		acknowledgeMessage = " ";
+	}
 %>
-<table>
-<th> <a href="issue_book.jsp">Issue Book</a><br/></th>
-<th> <a href="return_book.jsp">Return Book</a><br/></th>
-<th> <a href="view_book.jsp">view Book List</a><br/></th>
-<th> <a href="display_user.jsp">Search Book List</a><br/></th>
-</table>
+<h2><%= acknowledgeMessage %></h2>
+<jsp:include page="footer.html"></jsp:include>
 </body>
 </html>

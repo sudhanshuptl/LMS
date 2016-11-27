@@ -65,7 +65,7 @@ public class AdminServices {
 		return rowdata;
 	}
 	@SuppressWarnings("deprecation")
-	public void removeUser(int id) {
+	public boolean removeUser(int id) {
 		
 		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -74,19 +74,21 @@ public class AdminServices {
 		int memberId = id;
 		Member member = (Member) session.get(Member.class, memberId);
 		if(databaseServices.validateMemberId(memberId)){
-			session.delete(member);		
+			session.delete(member);	
+			transaction.commit();
+			DatabaseServices.closeSession(session);
+			return true;
 		}else{
-			System.out.println("Wow");
+			return false;
 			//ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
 		}
 		
-		transaction.commit();
+		
 //		member = (Member) session.get(Member.class, memberId);
 //		if(member == null)
 //			ServiceMain.printAcknowledgeMessage("\nUser Deleted Successfully\n");
 //		else
 //			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
-		DatabaseServices.closeSession(session);
 
 	}
 	@SuppressWarnings("deprecation")
@@ -109,7 +111,7 @@ public class AdminServices {
 
 	}
 	@SuppressWarnings("deprecation")
-	public void addBook(String bookName,String authorNmae,String edition) {
+	public boolean addBook(String bookName,String authorNmae,String edition) {
 		
 		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -123,7 +125,15 @@ public class AdminServices {
 
 		session.save(book);
 		transaction.commit();
-		DatabaseServices.closeSession(session);
+		
+		DatabaseServices databaseServices = new DatabaseServices();
+		if(databaseServices.validateBookId(book.getBookId())){
+			DatabaseServices.closeSession(session);
+			return true;			
+		}else{
+			DatabaseServices.closeSession(session);
+			return false;
+		}
 	}
 	@SuppressWarnings("deprecation")
 	public void updateBookDetails(int bookId,String bookName,String authorNmae,String edition) {
@@ -147,7 +157,7 @@ public class AdminServices {
 
 	}
 	@SuppressWarnings("deprecation")
-	public void removeBook(int id) {
+	public boolean removeBook(int id) {
 		
 		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -157,20 +167,24 @@ public class AdminServices {
 		int bookId = id;
 		Book book = (Book) session.get(Book.class, bookId);
 		if(databaseServices.validateBookId(bookId)){
-			session.delete(book);		
+			session.delete(book);	
+			transaction.commit();
+			DatabaseServices.closeSession(session);
+			return true;
 		}else{
-			System.out.println("wow");
+			return false;
+			//System.out.println("wow");
 			//ServiceMain.printAcknowledgeMessage("\nEnter Valid ID\n");
 		}
 		
-		transaction.commit();
+		
 //		book = (Book) session.get(Book.class, bookId);
 //		if(book == null)
 //			ServiceMain.printAcknowledgeMessage("\nBook Deleted Successfully\n");
 //		else
 //			ServiceMain.printAcknowledgeMessage("\nSomething went wrong\n");
 				
-		DatabaseServices.closeSession(session);
+		
 
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
@@ -197,15 +211,12 @@ public class AdminServices {
 	}
 	public Member searchByID(int id){
 		
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		Member member =(Member)session.get(Member.class, id);
 		//print 
 //		System.out.println(book);
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
 		return member;
 	}
 }

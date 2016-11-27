@@ -1,6 +1,7 @@
 package com.virtusa.project.ui.service;
 
 import com.virtusa.project.services.admin.AdminServices;
+import com.virtusa.project.services.book.BookServices;
 import com.virtusa.project.services.database.DatabaseServices;
 
 public class UiServices {
@@ -25,9 +26,9 @@ public class UiServices {
 		AdminServices adminSerivices = new AdminServices();
 		return(adminSerivices.addUser(userName, password, userPhoneNumber));	
 	}
-	public void addBook(String bookName,String authorNmae,String edition){
+	public boolean addBook(String bookName,String authorNmae,String edition){
 		AdminServices adminSerivices = new AdminServices();
-		adminSerivices.addBook(bookName, authorNmae, edition);	
+		return(adminSerivices.addBook(bookName, authorNmae, edition));	
 	}
 	public boolean validateMemberId(int memberId){
 		DatabaseServices databaseServices = new DatabaseServices();
@@ -37,13 +38,13 @@ public class UiServices {
 		DatabaseServices databaseServices = new DatabaseServices();
 		return(databaseServices.validateBookId(bookId));		
 	}
-	public void removeUser(int userId){
+	public boolean removeUser(int userId){
 		AdminServices adminSerivices = new AdminServices();
-		adminSerivices.removeUser(userId);	
+		return(adminSerivices.removeUser(userId));	
 	}
-	public void removeBook(int bookId){
+	public boolean removeBook(int bookId){
 		AdminServices adminSerivices = new AdminServices();
-		adminSerivices.removeBook(bookId);	
+		return(adminSerivices.removeBook(bookId));	
 	}
 	public String displayUserDetails(){
 		AdminServices adminSerivices = new AdminServices();
@@ -73,4 +74,29 @@ public class UiServices {
 		AdminServices adminSerivices = new AdminServices();
 		adminSerivices.updateBookDetails(bookId, bookName, authorNmae, edition);
 	}
+	public String issueBook(int memberId, int bookId){
+		BookServices bookServices = new BookServices();
+		return(bookServices.issueBook(memberId, bookId));
+	}
+	public String returnBook(int memberId, int bookId){
+		BookServices bookServices = new BookServices();
+		return(bookServices.returnBook(memberId, bookId));
+	}
+	public String sortBooksById(){
+		BookServices bookServices = new BookServices();
+		return(bookServices.sortBooksById());
+	}
+	public String sortBooksByName(){
+		BookServices bookServices = new BookServices();
+		return(bookServices.sortBooksByName());
+	}
+	public String sortBooksByRating(){
+		BookServices bookServices = new BookServices();
+		return(bookServices.sortBooksByRating());
+	}
+	public String sortByAuthor(){
+		BookServices bookServices = new BookServices();
+		return(bookServices.sortByAuthor());
+	}
+	
 }

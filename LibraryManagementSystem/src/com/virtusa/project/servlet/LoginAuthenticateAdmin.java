@@ -25,10 +25,11 @@ public class LoginAuthenticateAdmin extends HttpServlet {
 			httpSession.setAttribute("adminId", adminId);
 			httpSession.setAttribute("userType", "ADMIN");
 			httpSession.setAttribute("adminName", adminName);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("admin/admin_home_page.jsp");
-			requestDispatcher.forward(request, response);
+			/*RequestDispatcher requestDispatcher = request.getRequestDispatcher("admin/admin_home_page.jsp");
+			requestDispatcher.forward(request, response);*/
+			response.sendRedirect("admin/admin_home_page.jsp");
 		}else{
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.html");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
 			requestDispatcher.forward(request, response);
 		}
 	}

@@ -18,90 +18,91 @@ import com.virtusa.project.users.Member;
 public class BookServices {
 	
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
-	public void sortBooksById(){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+	public String sortBooksById(){
+
+		Session session = DatabaseServices.openSession();
 		Criteria criteria = session.createCriteria(Book.class);
 		criteria.addOrder(Order.asc("bookId"));
-		List<Book> books = criteria.list();
-		Iterator iterator = books.iterator();
-		while(iterator.hasNext()){
-			System.out.println(iterator.next());
+		List<Book> book = criteria.list();
+		Iterator iterator = book.iterator();
+		String rowdata="";
+		for(Book bk :book){
+			String id =(bk.getMember() != null)? bk.getMember().getId()+"":"-";
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+bk.getBookId()+"</td><td class=\"text-left\">"+bk.getBookName()+"</td><td class=\"text-left\">"+bk.getEdition()+"</td><td class=\"text-left\">"+bk.getRating()+"</td><td class=\"text-left\">"+id+"</td></tr>");
 		}
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
+		return rowdata;
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
-	public void sortBooksByName(){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+	public String sortBooksByName(){
+
+		Session session = DatabaseServices.openSession();
 		Criteria criteria = session.createCriteria(Book.class);
 		criteria.addOrder(Order.asc("bookName"));
-		List<Book> books = criteria.list();
-		Iterator iterator = books.iterator();
-		while(iterator.hasNext()){
-			System.out.println(iterator.next());
+		List<Book> book = criteria.list();
+		Iterator iterator = book.iterator();
+		String rowdata="";
+		for(Book bk :book){
+			String id =(bk.getMember() != null)? bk.getMember().getId()+"":"-";
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+bk.getBookId()+"</td><td class=\"text-left\">"+bk.getBookName()+"</td><td class=\"text-left\">"+bk.getEdition()+"</td><td class=\"text-left\">"+bk.getRating()+"</td><td class=\"text-left\">"+id+"</td></tr>");
 		}
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
+		return rowdata;
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
-	public void sortBooksByRating(){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+	public String sortBooksByRating(){
+
+		Session session = DatabaseServices.openSession();
 		
 		Criteria criteria = session.createCriteria(Book.class);
 		criteria.addOrder(Order.desc("rating"));
-		List<Book> books = criteria.list();
-		Iterator iterator = books.iterator();
-		while(iterator.hasNext()){
-			System.out.println(iterator.next());
+		List<Book> book = criteria.list();
+		Iterator iterator = book.iterator();
+		String rowdata="";
+		for(Book bk :book){
+			String id =(bk.getMember() != null)? bk.getMember().getId()+"":"-";
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+bk.getBookId()+"</td><td class=\"text-left\">"+bk.getBookName()+"</td><td class=\"text-left\">"+bk.getEdition()+"</td><td class=\"text-left\">"+bk.getRating()+"</td><td class=\"text-left\">"+id+"</td></tr>");
 		}
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
+		return rowdata;
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
-	public void sortByAuthor(){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+	public String sortByAuthor(){
+
+		Session session = DatabaseServices.openSession();
 		
 		Criteria criteria = session.createCriteria(Book.class);
 		criteria.addOrder(Order.asc("author"));
 		List<Book> books = criteria.list();
-		Iterator iterator = books.iterator();
-		while(iterator.hasNext()){
-			System.out.println(iterator.next());
+		List<Book> book = criteria.list();
+		Iterator iterator = book.iterator();
+		String rowdata="";
+		for(Book bk :book){
+			String id =(bk.getMember() != null)? bk.getMember().getId()+"":"-";
+			rowdata=rowdata.concat("<tr><td class=\"text-left\">"+bk.getBookId()+"</td><td class=\"text-left\">"+bk.getBookName()+"</td><td class=\"text-left\">"+bk.getEdition()+"</td><td class=\"text-left\">"+bk.getRating()+"</td><td class=\"text-left\">"+id+"</td></tr>");
 		}
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
+		return rowdata;
 	}
 	@SuppressWarnings("deprecation")
 	public Book searchByID(int id){
 	
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		Book book =(Book)session.get(Book.class, id);
 		//print 
 //		System.out.println(book);
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
 		return book;
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void searchByName(String name){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+
+		Session session = DatabaseServices.openSession();
 		
 		Criteria criteria = session.createCriteria(Book.class);
 		//need to fix for case insensitive matching
@@ -113,15 +114,12 @@ public class BookServices {
 			System.out.println(iterator.next());
 		}
 		
-		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
 	}
 	@SuppressWarnings({"unchecked", "rawtypes", "deprecation"})
 	public void searchByAuthor(String author){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+
+		Session session = DatabaseServices.openSession();
 		
 		Criteria criteria = session.createCriteria(Book.class);
 		//need to fix for case insensitive matching
@@ -133,14 +131,11 @@ public class BookServices {
 			System.out.println(iterator.next());
 		}
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void searchByRating(double rating){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		
 		Criteria criteria = session.createCriteria(Book.class);
 		//need to fix for case insensitive matching
@@ -154,14 +149,11 @@ public class BookServices {
 			System.out.println(iterator.next());
 		}
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
 	}
 	@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 	public void displayBookList(){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		
 		Criteria criteria = session.createCriteria(Book.class);
 		List<Book> book = criteria.list();
@@ -172,17 +164,14 @@ public class BookServices {
 		}
 		
 		
-		session.close();
-		sessionFactory.close();
+		DatabaseServices.closeSession(session);
 	}
 	/*
 	 *  Book Issue 
 	 */
 	@SuppressWarnings("deprecation")
 	public String issueBook(int memberId, int bookId) {
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
 		
 		Member member = (Member) session.get(Member.class, memberId);
@@ -195,6 +184,7 @@ public class BookServices {
 						book.setMember(member);
 						session.saveOrUpdate(book);
 						transaction.commit();
+						DatabaseServices.closeSession(session);
 						return "Book Succefully Issued";
 					}
 					else{
@@ -219,9 +209,7 @@ public class BookServices {
 	}
 	@SuppressWarnings("deprecation")
 	public String returnBook(int memberId,int bookId){
-		Configuration configuration = DatabaseServices.config();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		Session session = sessionFactory.openSession();
+		Session session = DatabaseServices.openSession();
 		Transaction transaction = session.beginTransaction();
 		
 		Member member = (Member) session.get(Member.class, memberId);
@@ -231,6 +219,7 @@ public class BookServices {
 				book.setMember(null);
 				session.saveOrUpdate(book);
 				transaction.commit();
+				DatabaseServices.closeSession(session);
 				return "Book Successfully returend, Thank you";
 			}
 			else{

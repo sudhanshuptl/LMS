@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.virtusa.project.ui.service.UiServices;
 
@@ -17,15 +18,28 @@ public class AddBook extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("hi");
-		//out.println("hi");
+		HttpSession session = request.getSession();
 		String bookName = request.getParameter("bookName");
 		String authorName = request.getParameter("authorName");
 		String edition = request.getParameter("edition");
 		UiServices uiServices = new UiServices();
-		uiServices.addBook(bookName, authorName, edition);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("admin/admin_home_page.jsp");
-		requestDispatcher.include(request, response);
+		String ack;
+		try{
+		if(uiServices.addBook(bookName, authorName, edition)){
+			 ack = "Book Successfully added";
+		}
+		else{
+			ack = "User cannot be added";
+		}
+		}
+		catch(Exception ex)
+		{
+			ack = "Something Wrong happened!!!!";
+		}
+		session.setAttribute("ack", ack);
+		/*RequestDispatcher requestDispatcher = request.getRequestDispatcher("admin/admin_home_page.jsp");
+		requestDispatcher.include(request, response);*/
+		response.sendRedirect("admin/admin_home_page.jsp");
 	}
 
 }

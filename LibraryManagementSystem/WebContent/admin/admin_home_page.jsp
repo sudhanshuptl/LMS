@@ -6,28 +6,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin</title>
+
+<style>
+	h2{
+	text-align: center;
+	padding-top: 200px;
+	}
+</style>
+
 </head>
 <body>
-
+<jsp:include page="/IsValidAdmin" flush="true"/>
+<jsp:include page="admin_header.html"></jsp:include>
 <%
+	String acknowledgeMessage = null;
 	session = request.getSession(false);
-	out.print(session.getValue("adminId"));
+	/* out.print(session.getValue("adminId"));
 	out.print(session.getValue("userType"));
 	out.print(session.getValue("adminName"));
-	out.print(session.getValue("adminId"));
+	out.print(session.getValue("adminId")); */
+	acknowledgeMessage = (String)(session.getAttribute("ack")+"");
+	if(acknowledgeMessage == null){
+		acknowledgeMessage = " ";
+	}
 %>
-<table>
-<th> <a href="admin/add_user.jsp">Add User</a><br/></th>
-<th> <a href="admin/update_member_by_id.jsp">Update User Details</a><br/></th>
-<th> <a href="admin/remove_user.jsp">Remove User</a><br/></th>
-<th> <a href="admin/display_user.jsp">Display User Details</a><br/></th>
-<th> <a href="admin/add_book.jsp">Add Book</a><br/></th>
-<th> <a href="admin/update_book_by_id.jsp">Update Book Details</a><br/></th>
-<th> <a href="admin/remove_book.jsp">Remove Book</a><br/></th>
-<th> <a href="admin/display_book.jsp">Display Book Details</a><br/></th>
-</table>
-
-
-
+<h2><%= acknowledgeMessage %></h2>
+<jsp:include page="footer.html"></jsp:include>
 </body>
 </html>

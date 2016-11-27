@@ -49,8 +49,7 @@
     <servlet-name>UpdateUser</servlet-name>
     <url-pattern>/update_user</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>UpdateBook</servlet-name>
     <servlet-class>com.virtusa.project.servlet.UpdateBook</servlet-class>
   </servlet>
@@ -66,8 +65,7 @@
     <servlet-name>UpdateUserDetails</servlet-name>
     <url-pattern>/update_userdetails</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>UpdateBookDetails</servlet-name>
     <servlet-class>com.virtusa.project.servlet.UpdateBookDetails</servlet-class>
   </servlet>
@@ -75,7 +73,6 @@
     <servlet-name>UpdateBookDetails</servlet-name>
     <url-pattern>/update_bookdetails</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>RemoveUser</servlet-name>
     <servlet-class>com.virtusa.project.servlet.RemoveUser</servlet-class>
@@ -91,5 +88,38 @@
   <servlet-mapping>
     <servlet-name>RemoveBook</servlet-name>
     <url-pattern>/remove_book</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>IsValidAdmin</servlet-name>
+    <servlet-class>com.virtusa.project.servlet.IsValidAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IsValidAdmin</servlet-name>
+    <url-pattern>/IsValidAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>IssueBook</servlet-name>
+    <servlet-class>com.virtusa.project.servlet.IssueBook</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IssueBook</servlet-name>
+    <url-pattern>/issue_books</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ReturnBook</servlet-name>
+    <servlet-class>com.virtusa.project.servlet.ReturnBook</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReturnBook</servlet-name>
+    <url-pattern>/return_books</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>IsValidMember</servlet-name>
+    <servlet-class>com.virtusa.project.servlet.IsValidMember</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IsValidMember</servlet-name>
+    <url-pattern>/isValidMember</url-pattern>
   </servlet-mapping>
 </web-app>
